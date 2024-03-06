@@ -1,24 +1,17 @@
 import Table from 'react-bootstrap/Table';
 import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { fetchListUsers } from '../redux/User/user.slide';
 
-interface IUser {
-    id: number,
-    name: string,
-    email: string
-}
+
 const BasicExample = () => {
 
-    const [listUsers, setListUsers] = useState<IUser[]>([])
+    const dispatch = useAppDispatch();
+    const users = useAppSelector(state => state.user.listUsers);
 
     useEffect(() => {
-        fetchListUser()
+        dispatch(fetchListUsers())
     }, [])
-
-    const fetchListUser = async () => {
-        let res = await fetch('http://localhost:8000/users');
-        const data = await res.json();
-        setListUsers(data)
-    }
 
     return (
         <Table striped bordered hover>
@@ -31,7 +24,7 @@ const BasicExample = () => {
             </thead>
             <tbody>
                 {
-                    listUsers?.map((item, index) => {
+                    users?.map((item, index) => {
                         return (
                             <tr key={`user-${index}`}>
                                 <td>{item.id}</td>
