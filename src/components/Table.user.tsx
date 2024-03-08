@@ -61,8 +61,8 @@ const TableUser = () => {
                             return (
                                 <tr key={`user-${index}`}>
                                     <td>{item.id}</td>
-                                    <td>{item.name}</td>
                                     <td>{item.email}</td>
+                                    <td>{item.name}</td>
                                     <td>
                                         <button
                                             className='btn btn-warning mx-3'

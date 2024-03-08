@@ -3,6 +3,9 @@ import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { resetUpdate, updateNewUser } from '../redux/User/user.slide';
+import { toast } from 'react-toastify';
 
 const ModalEdit = (props: any) => {
 
@@ -12,6 +15,9 @@ const ModalEdit = (props: any) => {
     const [id, setId] = useState('')
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
+    const isUpdateSuccess = useAppSelector(state => state.user.isUpdateSuccess)
+
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (dataEdit.id) {
@@ -21,8 +27,17 @@ const ModalEdit = (props: any) => {
         }
     }, [dataEdit])
 
+    useEffect(() => {
+        if (isUpdateSuccess === true) {
+            handleClose();
+            toast.success('update succeed')
+            dispatch(resetUpdate());
+        }
+    }, [isUpdateSuccess])
+
     const handleSubmit = () => {
-        console.log(id, email, name);
+        // console.log(id, email, name);
+        dispatch(updateNewUser({ id, name, email }))
     }
 
     return (
