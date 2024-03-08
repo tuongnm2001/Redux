@@ -2,21 +2,32 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { createNewUser, resetCreate } from '../redux/User/user.slide';
+import { toast } from 'react-toastify';
 
-interface ModalAddNewProps {
-    show: boolean;
-    setShow: React.Dispatch<React.SetStateAction<boolean>>;
-}
+const ModalAddNew = (props: any) => {
 
-const ModalAddNew: React.FC<ModalAddNewProps> = ({ show, setShow }) => {
+    const { show, setShow } = props;
+    const [email, setEmail] = useState<string>('')
+    const [name, setName] = useState<string>('')
+    const dispatch = useAppDispatch();
+    const isCreateSuccess = useAppSelector(state => state.user.isCreateSuccess)
 
     const handleClose = () => setShow(false);
-    const [email, setEmail] = useState('')
-    const [name, setName] = useState('')
+
+    useEffect(() => {
+        if (isCreateSuccess === true) {
+            handleClose();
+            toast.success('create succeed');
+            //reset redux
+            dispatch(resetCreate());
+        }
+    }, [isCreateSuccess])
 
     const handleSubmit = () => {
-        console.log(email, name);
+        dispatch(createNewUser({ email, name }))
     }
 
     return (
@@ -35,10 +46,19 @@ const ModalAddNew: React.FC<ModalAddNewProps> = ({ show, setShow }) => {
                     label="Email address"
                     className="mb-3"
                 >
-                    <Form.Control type="email" placeholder="name@example.com" onChange={(event) => setEmail(event?.target.value)} />
+                    <Form.Control
+                        type="email"
+                        placeholder="name@example.com"
+                        onChange={(event) => setEmail(event?.target.value)}
+                    />
                 </FloatingLabel>
-                <FloatingLabel label="Password">
-                    <Form.Control type="text" placeholder="Name" onChange={(event) => setName(event?.target.value)} />
+
+                <FloatingLabel label="Name">
+                    <Form.Control
+                        type="text"
+                        placeholder="Name"
+                        onChange={(event) => setName(event?.target.value)}
+                    />
                 </FloatingLabel>
             </Modal.Body>
 
@@ -47,7 +67,7 @@ const ModalAddNew: React.FC<ModalAddNewProps> = ({ show, setShow }) => {
                     Close
                 </Button>
                 <Button variant="primary" onClick={() => handleSubmit()}>
-                    Save Changes
+                    Save
                 </Button>
             </Modal.Footer>
         </Modal>
