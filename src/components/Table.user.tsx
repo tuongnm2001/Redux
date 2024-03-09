@@ -6,6 +6,7 @@ import './TableUser.scss'
 import ModalAddNew from './ModalAddNew';
 import ModalEdit from './ModalEdit';
 import ModalDelete from './ModalDelete';
+import Navbar from 'react-bootstrap/Navbar';
 
 const TableUser = () => {
 
@@ -38,14 +39,14 @@ const TableUser = () => {
     return (
         <>
             <div className='title'>
-                <label className='tableUser'>Table Users</label>
+                <Navbar.Text style={{ fontSize: '24px', fontWeight: '500' }}>Table Users</Navbar.Text>
                 <button
                     className='btn btn-primary'
                     onClick={() => handleAddNew()}
                 >
                     Add New
                 </button>
-            </div>
+            </div >
             <Table striped bordered hover>
                 <thead>
                     <tr>
