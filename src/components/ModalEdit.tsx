@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { resetUpdate, updateNewUser } from '../redux/User/user.slide';
 import { toast } from 'react-toastify';
 
-const ModalEdit = (props: any) => {
+const ModalEditBlog = (props: any) => {
 
     const { show, setShow, dataEdit } = props;
 
@@ -36,7 +36,6 @@ const ModalEdit = (props: any) => {
     }, [isUpdateSuccess])
 
     const handleSubmit = () => {
-        // console.log(id, email, name);
         dispatch(updateNewUser({ id, name, email }))
     }
 
@@ -85,4 +84,4 @@ const ModalEdit = (props: any) => {
     );
 }
 
-export default ModalEdit;
+export default ModalEditBlog;

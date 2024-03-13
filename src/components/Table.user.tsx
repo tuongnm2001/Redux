@@ -39,7 +39,7 @@ const TableUser = () => {
     return (
         <>
             <div className='title'>
-                <Navbar.Text style={{ fontSize: '24px', fontWeight: '500' }}>Table Users</Navbar.Text>
+                <Navbar.Text style={{ fontSize: '20px', fontWeight: '400' }}>Table Users</Navbar.Text>
                 <button
                     className='btn btn-primary'
                     onClick={() => handleAddNew()}
